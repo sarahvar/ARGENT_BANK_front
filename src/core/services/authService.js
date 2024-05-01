@@ -1,4 +1,3 @@
-
 const login = () => async ({ email, password }, { rejectWithValue }) => {
     try {
         const requestOptions = {
