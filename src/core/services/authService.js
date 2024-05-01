@@ -1,76 +1,89 @@
-import axios from "axios"
 
 const login = () => async ({ email, password }, { rejectWithValue }) => {
     try {
-        const config = {
+        const requestOptions = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify({ email, password }),
+        };
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_LOGIN_ENDPOINT}`,
+            requestOptions
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to log in');
         }
-        const { data } = await axios.post(
-            `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_LOGIN_ENDPOINT}`,
-            { email, password },
-            config
-            )
-        return data
+
+        return data;
     } catch (error) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
-            }
-        }
+        return rejectWithValue(error.message);
     }
+};
 
 const fetchUserInfos = () => async (token, { rejectWithValue }) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                }
-            }
-            const { data } = await axios.post(
-                `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PROFILE_ENDPOINT}`,
-                { token },
-                config
-                )
-                return data
-            } catch (error) {
-                if (error.response && error.response.data.message) {
-                    return rejectWithValue(error.response.data.message)
-                } else {
-                    return rejectWithValue(error.message)
-                }
-            }
-        }
-
-const updateUserInfos = () => async ({token, firstName, lastName }, { rejectWithValue }) => {
     try {
-        const config = {
+        const requestOptions = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
-            }
+            },
+            body: JSON.stringify({ token }),
+        };
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_PROFILE_ENDPOINT}`,
+            requestOptions
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to fetch user information');
         }
-        const { data } = await axios.put(
-            `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PROFILE_ENDPOINT}`,
-            { firstName, lastName },
-            config
-            )
-            return data
-        } catch (error) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
-            }
-        }
+
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.message);
     }
+};
+
+const updateUserInfos = () => async ({ token, firstName, lastName }, { rejectWithValue }) => {
+    try {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ firstName, lastName }),
+        };
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_PROFILE_ENDPOINT}`,
+            requestOptions
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to update user information');
+        }
+
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+};
 
 export const authService = {
     login,
     fetchUserInfos,
-    updateUserInfos
-}
-
+    updateUserInfos,
+};
