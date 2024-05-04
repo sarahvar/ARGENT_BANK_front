@@ -1,0 +1,31 @@
+
+
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #00bd78;;
+    margin: 30px;
+  }
+  
+  .title-error {
+    margin-top: 45px;
+    text-align: center;
+  }
+  
+  .oups {
+    text-align: center;
+    margin: 66px 0;
+    font-size: 36px;
+    font-weight: normal;
+  }
+  
+  .link-accueil {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #00bd78;;
+  }
+  
