@@ -12,7 +12,7 @@ export const userLogin = createAsyncThunk('auth/login', authService.login());
 export const fetchUserInfos = createAsyncThunk('auth/infos', authService.fetchUserInfos());
 export const updateUserInfos = createAsyncThunk('auth/update', authService.updateUserInfos());
                         
-const token = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
+const token = sessionStorage.getItem('userToken') ? sessionStorage.getItem('userToken') : null;
 const initialState = {
     loading: 'idle',
     token,
@@ -25,7 +25,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            localStorage.removeItem('userToken');
+            sessionStorage.removeItem('userToken');
             state.loading = false;
             state.error = null;
         },
@@ -39,7 +39,7 @@ const authSlice = createSlice({
             .addCase(userLogin.fulfilled, (state, { payload }) => {
                 state.loading = LoadingStatus.Success;
                 state.token = payload.body.token;
-                localStorage.setItem('userToken', state.token);
+                sessionStorage.setItem('userToken', state.token);
             })
             .addCase(userLogin.rejected, (state, {payload }) => {
                 state.loading = LoadingStatus.Failed;
