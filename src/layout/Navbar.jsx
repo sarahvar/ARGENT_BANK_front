@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <NavbarStyled>
       <nav>
-        <Link>
+        <Link to ="/">
           <img src={logo} alt="logo" />
         </Link>
 
