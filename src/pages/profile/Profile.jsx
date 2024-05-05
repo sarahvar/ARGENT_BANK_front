@@ -4,6 +4,8 @@ import Button from "../../components/Button";
 import Account from "./Account";
 import Form from "./Form";
 import Loader from "../../components/Loader";
+import Navbar from "../../layout/Navbar"; // Import de la Navbar
+import Footer from "../../layout/Footer"; // Import du Footer
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -42,54 +44,58 @@ export default function Profile() {
   };
 
   return (
-    <AccountsStyled>
-      {loading !== LoadingStatus.Success ? (
-        <Loader />
-      ) : (
-        <>
-          <header>
-            <h1>
-              Welcome back
-              <br /> {userInfos.firstName} {userInfos.lastName}
-            </h1>
-            <Form
-              editProfile={editProfile}
-              userInfos={userInfos}
-              editFirstName={setFirstName}
-              editLastName={setLastName}
-              saveAction={updateUserName}
-              cancelAction={toggleUpdateProfile}
-            />
-            <Button
-              className={editProfile ? "hidden" : ""}
-              content="Edit name"
-              handleClick={toggleUpdateProfile}
-            />
-          </header>
-          <div>
-            {accounts.map(
-              ({
-                id,
-                accountType,
-                accountNumber,
-                accountBalance,
-                accountInfo,
-              }) => {
-                return (
-                  <Account
-                    key={id}
-                    number={accountNumber}
-                    title={accountType}
-                    balance={accountBalance}
-                    description={accountInfo}
-                  />
-                );
-              }
-            )}
-          </div>
-        </>
-      )}
-    </AccountsStyled>
+    <>
+      <Navbar /> {/* Ajout de la Navbar */}
+      <AccountsStyled>
+        {loading !== LoadingStatus.Success ? (
+          <Loader />
+        ) : (
+          <>
+            <header>
+              <h1>
+                Welcome back
+                <br /> {userInfos.firstName} {userInfos.lastName}
+              </h1>
+              <Form
+                editProfile={editProfile}
+                userInfos={userInfos}
+                editFirstName={setFirstName}
+                editLastName={setLastName}
+                saveAction={updateUserName}
+                cancelAction={toggleUpdateProfile}
+              />
+              <Button
+                className={editProfile ? "hidden" : ""}
+                content="Edit name"
+                handleClick={toggleUpdateProfile}
+              />
+            </header>
+            <div>
+              {accounts.map(
+                ({
+                  id,
+                  accountType,
+                  accountNumber,
+                  accountBalance,
+                  accountInfo,
+                }) => {
+                  return (
+                    <Account
+                      key={id}
+                      number={accountNumber}
+                      title={accountType}
+                      balance={accountBalance}
+                      description={accountInfo}
+                    />
+                  );
+                }
+              )}
+            </div>
+          </>
+        )}
+      </AccountsStyled>
+      <Footer /> {/* Ajout du Footer */}
+    </>
   );
 }
 
