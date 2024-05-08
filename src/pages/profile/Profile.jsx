@@ -11,16 +11,16 @@ import {
   LoadingStatus,
   fetchUserInfos,
   updateUserInfos,
+  setEditProfile, // Importez l'action setEditProfile depuis le slice Redux
 } from "../../core/redux/authSlice";
 import { accounts } from "../../data/accounts";
 
 export default function Profile() {
-  const [editProfile, setEditProfile] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, token, userInfos } = useSelector((state) => state.auth);
+  const { loading, token, userInfos, editProfile } = useSelector((state) => state.auth); // Utilisez useSelector pour obtenir editProfile
 
   useEffect(() => {
     if (!token) {
@@ -32,18 +32,18 @@ export default function Profile() {
 
   const toggleUpdateProfile = (event) => {
     event.preventDefault();
-    setEditProfile(!editProfile);
+    dispatch(setEditProfile(!editProfile)); // Déclenchez setEditProfile avec la nouvelle valeur de editProfile
   };
 
   const updateUserName = async (event) => {
     event.preventDefault();
     dispatch(updateUserInfos({ token, firstName, lastName }));
-    setEditProfile(!editProfile);
+    dispatch(setEditProfile(false)); // Déclenchez setEditProfile avec false après avoir mis à jour les informations de l'utilisateur
   };
 
   return (
     <>
-      <AccountsStyled>
+      <AccountsStyled $editProfile={editProfile}>
         {loading !== LoadingStatus.Success ? (
           <Loader />
         ) : (
@@ -98,7 +98,10 @@ export default function Profile() {
 const AccountsStyled = styled.main`
   text-align: center;
   padding: ${theme.spacing.xl};
-  background-color: ${theme.colors.backgroundDark};
+  background-color: ${(props) =>
+    props.$editProfile
+      ? theme.colors.backgroundLight
+      : theme.colors.backgroundDark};
   min-height: 80vh;
 
   > :first-child {

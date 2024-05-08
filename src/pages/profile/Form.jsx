@@ -1,3 +1,4 @@
+
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import styled from "styled-components";
@@ -12,10 +13,7 @@ export default function Form({
   cancelAction,
 }) {
   return (
-    <FormStyled
-      onSubmit={saveAction}
-      className={!editProfile ? "hidden" : "name-form"}
-    >
+    <FormStyled onSubmit={saveAction} className={!editProfile ? "hidden" : "name-form"}>
       <div className="profile-form">
         <Input
           placeholder={userInfos.firstName}
@@ -27,7 +25,6 @@ export default function Form({
         />
       </div>
       <div className="profile-form">
-        {/* <Button content={"Save"} handleClick={saveAction} /> */}
         <Button type="submit" content={"Save"} />
         <Button
           type="button"

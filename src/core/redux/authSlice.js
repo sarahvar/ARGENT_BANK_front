@@ -11,13 +11,14 @@ export const LoadingStatus = Object.freeze({
 export const userLogin = createAsyncThunk('auth/login', authService.login());
 export const fetchUserInfos = createAsyncThunk('auth/infos', authService.fetchUserInfos());
 export const updateUserInfos = createAsyncThunk('auth/update', authService.updateUserInfos());
-                        
+
 const token = sessionStorage.getItem('userToken') ? sessionStorage.getItem('userToken') : null;
 const initialState = {
-    loading: 'idle',
+    loading: LoadingStatus.Idle,
     token,
     error: null,
-    userInfos: null
+    userInfos: null,
+    editProfile: false // Ajoutez editProfile à l'état initial
 };
 
 const authSlice = createSlice({
@@ -28,6 +29,10 @@ const authSlice = createSlice({
             sessionStorage.removeItem('userToken');
             state.loading = false;
             state.error = null;
+        },
+        // Ajoutez cette action pour mettre à jour l'état editProfile
+        setEditProfile: (state, action) => {
+            state.editProfile = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -72,5 +77,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setEditProfile } = authSlice.actions;
 export default authSlice.reducer;

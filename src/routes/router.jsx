@@ -10,7 +10,7 @@ const RouterComponent = () => (
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<Profile/>} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   </Layout>
