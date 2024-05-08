@@ -1,4 +1,4 @@
-import React from "react";
+
 import styled, { keyframes } from "styled-components";
 
 // Définition des keyframes pour les animations

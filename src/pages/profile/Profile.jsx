@@ -4,8 +4,6 @@ import Button from "../../components/Button";
 import Account from "./Account";
 import Form from "./Form";
 import Loader from "../../components/Loader";
-import Navbar from "../../layout/Navbar"; // Import de la Navbar
-import Footer from "../../layout/Footer"; // Import du Footer
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +43,6 @@ export default function Profile() {
 
   return (
     <>
-      <Navbar /> {/* Ajout de la Navbar */}
       <AccountsStyled>
         {loading !== LoadingStatus.Success ? (
           <Loader />
@@ -94,7 +91,6 @@ export default function Profile() {
           </>
         )}
       </AccountsStyled>
-      <Footer /> {/* Ajout du Footer */}
     </>
   );
 }

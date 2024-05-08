@@ -5,8 +5,6 @@ import Form from "./Form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import NavBar from "../../layout/Navbar"; 
-import Footer from "../../layout/Footer"; 
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,11 +16,9 @@ export default function Login() {
 
   return (
     <>
-      <NavBar />
       <SigninStyled>
         <Form icon={<FaUserCircle className="form__icon" />} title={"Sign in"} />
       </SigninStyled>
-      <Footer />
     </>
   );
 }
