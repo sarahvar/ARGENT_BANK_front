@@ -15,8 +15,8 @@ export default function Navbar() {
   const { token, userInfos } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!userInfos) {
-      dispatch(fetchUserInfos(token));
+    if (!userInfos && token)  {
+      dispatch(fetchUserInfos(token) );
     }
   }, [dispatch, token, userInfos]);
 

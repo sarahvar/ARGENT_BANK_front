@@ -12,13 +12,13 @@ export const userLogin = createAsyncThunk('auth/login', authService.login());
 export const fetchUserInfos = createAsyncThunk('auth/infos', authService.fetchUserInfos());
 export const updateUserInfos = createAsyncThunk('auth/update', authService.updateUserInfos());
 
-const token = sessionStorage.getItem('userToken') ? sessionStorage.getItem('userToken') : null;
+// const token = sessionStorage.getItem('userToken') ? sessionStorage.getItem('userToken') : null;
 const initialState = {
     loading: LoadingStatus.Idle,
-    token,
+    token : null,
     error: null,
     userInfos: null,
-    editProfile: false // Ajoutez editProfile à l'état initial
+    editProfile: false 
 };
 
 const authSlice = createSlice({
@@ -26,7 +26,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            sessionStorage.removeItem('userToken');
+            state.token = null;
             state.loading = false;
             state.error = null;
         },
@@ -44,7 +44,7 @@ const authSlice = createSlice({
             .addCase(userLogin.fulfilled, (state, { payload }) => {
                 state.loading = LoadingStatus.Success;
                 state.token = payload.body.token;
-                sessionStorage.setItem('userToken', state.token);
+                // sessionStorage.setItem('userToken', state.token);
             })
             .addCase(userLogin.rejected, (state, {payload }) => {
                 state.loading = LoadingStatus.Failed;
