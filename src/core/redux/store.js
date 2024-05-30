@@ -7,7 +7,7 @@ const persistConfig = {
     key: 'root',
     storage,
     version: 1,
-    blacklist: ['loading', 'error'] 
+    blacklist: ['loading', 'error'],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -23,5 +23,16 @@ const store = configureStore({
         }),
 });
 
-export const persistor = persistStore(store);
+// Créez une fonction pour arrêter la persistance après un délai spécifié
+const stopPersistAfterDelay = (delay) => {
+    setTimeout(() => {
+        persistStore(store).purge(); // Arrêtez la persistance des données
+    }, delay);
+};
+
+// Appelez la fonction pour arrêter la persistance après 24 heures
+stopPersistAfterDelay(86400000);
+
 export default store;
+export const persistor = persistStore(store);
+
