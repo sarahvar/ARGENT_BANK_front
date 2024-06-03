@@ -3,7 +3,7 @@ export const accounts = [
       id: 1,
       accountType: "Argent Bank Checking",
       accountNumber: "x8349",
-      accountBalance: "2082.7",
+      accountBalance: "2082.79",
       accountInfo: "Available Balance",
     },
     {
