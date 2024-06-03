@@ -30,7 +30,7 @@ const stopPersistAfterDelay = (delay) => {
     }, delay);
 };
 
-// Appelez la fonction pour arrêter la persistance après 24 heures
+// Appelez la fonction pour arrêter la persistance après 24 heures en millisecondes
 stopPersistAfterDelay(86400000);
 
 export default store;

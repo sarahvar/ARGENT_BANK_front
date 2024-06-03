@@ -6,44 +6,47 @@ import { userLogin } from "../../core/redux/authSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function Form({ icon, title }) {
+export default function Form({ icon, title, setError }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const postLoginCredentials = (event) => {
+  const postLoginCredentials = async (event) => {
     event.preventDefault();
-    dispatch(userLogin({ email, password }));
+    try {
+      const response = await dispatch(userLogin({ email, password }));
+      if (response.error) {
+        setError("Invalid email or password."); // 
+      }
+    } catch (error) {
+      setError("Something went wrong."); 
+    }
   };
 
   return (
-    <FormStyled
-      onSubmit={postLoginCredentials}
-      className="signin__form"
-      method="POST"
-    >
+    <FormStyled onSubmit={postLoginCredentials} className="signin__form" method="POST">
       {icon && icon}
       {title && <h1>{title}</h1>}
       <Input
-        type={"email"}
-        label={"Email"}
+        type="email"
+        label="Email"
         handleChange={(e) => setEmail(e.target.value)}
         required
       />
       <Input
+        type="password"
+        label="Password"
         value={password}
-        type={"password"}
-        label={"Password"}
         handleChange={(e) => setPassword(e.target.value)}
         required
       />
       <Input
-        label={"Remember me"}
-        type={"checkbox"}
-        id={"remember-me"}
-        className={"input-remember"}
+        label="Remember me"
+        type="checkbox"
+        id="remember-me"
+        className="input-remember"
       />
-      <Button content={"Sign in"} className={"sign-in__button"} />
+      <Button content="Sign in" className="sign-in__button" />
     </FormStyled>
   );
 }
@@ -57,11 +60,12 @@ const FormStyled = styled.form`
   text-align: center;
 
   .input-remember {
-    flex-direction: row-reverse;
+    display: flex;
+    align-items: center;
     justify-content: start;
-    font-weight: ${theme.fonts.weight.medium};
+    margin-top: ${theme.spacing.md};
 
-    & label {
+    label {
       margin-left: ${theme.spacing.xxs};
     }
   }

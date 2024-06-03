@@ -3,38 +3,47 @@ import styled from "styled-components";
 import { theme } from "../../theme";
 import Form from "./Form";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token) return navigate("/profile");
+    if (token) navigate("/profile");
   }, [navigate, token]);
 
   return (
-    <>
-      <SigninStyled>
-        <Form icon={<FaUserCircle className="form__icon" />} title={"Sign in"} />
-      </SigninStyled>
-    </>
+    <SigninStyled>
+      <Form
+        icon={<FaUserCircle className="form__icon" />}
+        title="Sign in"
+        setError={setError}
+      />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </SigninStyled>
   );
 }
 
 const SigninStyled = styled.main`
-  display: flex; /* Utiliser flexbox pour occuper toute la hauteur */
-  flex-direction: column; /* Aligner les enfants verticalement */
-  justify-content: center; /* Centrer verticalement le contenu */
-  align-items: center; /* Centrer horizontalement le contenu */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: ${theme.colors.backgroundDark};
-  min-height: 100vh; /* Utiliser la hauteur de l'écran */
-  padding: ${theme.spacing.md}; /* Ajouter un peu de marge */
+  min-height: 100vh;
+  padding: ${theme.spacing.md};
 
-  /* Style spécifique à votre formulaire peut être ajouté ici */
-  
   .form__icon {
-    font-size: 4rem; /* Ajuster la taille de l'icône */
+    font-size: 4rem;
   }
 `;
+
+const ErrorMessage = styled.p`
+  color: red; /* Utiliser la couleur rouge pour le message d'erreur */
+  margin-top: ${theme.spacing.sm};
+`;
+
