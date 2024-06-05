@@ -297,3 +297,8 @@ definitions:
     properties:
       category:
         type: string
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
